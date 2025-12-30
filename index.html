@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>one-spec-4-all Testing Framework | Interactive Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      /* Custom Font Import */
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap");
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8fafc; /* Slate 50 */
+        color: #1e293b; /* Slate 800 */
+      }
+
+      .font-mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      /* Chart Container Styles - Mandatory strictly followed */
+      .chart-container {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        height: 300px;
+        max-height: 400px;
+      }
+
+      @media (min-width: 768px) {
+        .chart-container {
+          height: 350px;
+        }
+      }
+
+      /* Custom Scrollbar for code blocks */
+      .code-scroll::-webkit-scrollbar {
+        height: 8px;
+      }
+      .code-scroll::-webkit-scrollbar-track {
+        background: #1e293b;
+      }
+      .code-scroll::-webkit-scrollbar-thumb {
+        background: #475569;
+        border-radius: 4px;
+      }
+
+      /* Animations */
+      .fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .tab-active {
+        border-bottom: 3px solid;
+        font-weight: 700;
+      }
+    </style>
+    <!-- Chosen Palette: Warm Neutral Background (Slate-50) with Semantic Accents: Indigo (Math), Emerald (Narrative), Amber (Imperative) -->
+    <!-- Application Structure Plan: 
+         1. Hero Section: High-level overview of the "One Runner" concept.
+         2. The Philosophy Engine (Interactive Tabs): Users select a dialect (Math, Narrative, Imperative). The view updates dynamically to show the Vibe, Philosophy, Target Use Cases, and a Radar Chart visualizing the "Fit" for different testing scenarios.
+         3. The Code Morpher (Interactive Comparison): A split-view or toggle section where the user sees a "Standard Jest" snippet and watches it transform into the selected dialect, reinforcing the translation concept.
+         4. The Rosetta Stone Explorer (Data Table): A searchable/filterable table allowing users to find specific API equivalents across all dialects (e.g., filter by "Mocks" or "Assertions").
+         5. API Distribution Analysis (Chart): A bar chart visualizing the breadth of the API coverage in each category.
+    -->
+    <!-- Visualization & Content Choices:
+         1. Radar Chart (Chart.js): Visualizes "Dialect Suitability" (Logic vs. UI vs. API vs. Compliance). Helps users choose the right dialect based on their problem domain (Goal: Inform/Compare).
+         2. Bar Chart (Chart.js): Shows the count of API methods per category (Structure, Assertion, Mock, Lifecycle). visualizes the robustness of the framework (Goal: Inform).
+         3. Interactive Table (DOM Manipulation): The Rosetta Stone. Allows filtering by "Jest Equivalent" or "Category" to make the large mapping table consumable (Goal: Organize/Search).
+         4. Code Morphing Blocks (DOM Manipulation): Text updates based on state to demonstrate syntax differences without reloading (Goal: Compare/Change).
+         5. Dynamic Cards: Used for the Philosophy section to switch context without scrolling (Goal: Relationship).
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+  </head>
+  <body class="antialiased min-h-screen flex flex-col">
+    <!-- Header / Hero -->
+    <header
+      class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+      >
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🌐</span>
+          <h1 class="text-xl font-bold tracking-tight text-slate-900">
+            one-spec-4-all
+          </h1>
+        </div>
+        <nav class="hidden md:flex gap-6 text-sm font-medium text-slate-600">
+          <a href="#philosophy" class="hover:text-indigo-600 transition"
+            >Filosofias</a
+          >
+          <a href="#morpher" class="hover:text-indigo-600 transition"
+            >Code Morpher</a
+          >
+          <a href="#rosetta" class="hover:text-indigo-600 transition"
+            >Pedra de Roseta</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main class="flex-grow">
+      <!-- INTRO -->
+      <section class="max-w-4xl mx-auto px-4 py-12 text-center">
+        <span
+          class="inline-block py-1 px-3 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold tracking-wide uppercase mb-4"
+          >Framework Conceitual</span
+        >
+        <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+          One Runner to Rule Them All.
+        </h2>
+        <p class="text-lg text-slate-600 leading-relaxed mb-8">
+          O <strong>one-spec-4-all</strong> é uma biblioteca inovadora que
+          desacopla a lógica de execução da semântica de escrita. A linguagem
+          usada nos seus testes deve refletir a natureza do problema que você
+          está resolvendo. Algoritmo complexo? Fluxo de usuário? Contrato de
+          API? Escolha o dialeto certo.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <button
+            onclick="document.getElementById('philosophy').scrollIntoView({behavior: 'smooth'})"
+            class="bg-slate-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-slate-800 transition shadow-lg"
+          >
+            Explorar Dialetos
+          </button>
+        </div>
+      </section>
+
+      <!-- SECTION 1: PHILOSOPHY ENGINE -->
+      <section id="philosophy" class="bg-white py-16 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="mb-10 max-w-2xl">
+            <h3 class="text-2xl font-bold text-slate-900 mb-2">
+              Engenharia de Filosofias
+            </h3>
+            <p class="text-slate-600">
+              Cada dialeto foi forjado com um propósito específico. Navegue
+              pelas abas abaixo para entender o "Vibe" e a aplicação ideal de
+              cada linguagem de teste disponível no framework.
+            </p>
+          </div>
+
+          <!-- Tabs -->
+          <div class="flex border-b border-slate-200 mb-8 overflow-x-auto">
+            <button
+              id="tab-math"
+              class="tab-btn px-6 py-3 text-sm font-medium text-slate-500 hover:text-indigo-600 focus:outline-none whitespace-nowrap tab-active border-indigo-600 text-indigo-600"
+              onclick="switchDialect('math')"
+            >
+              📐 O Matemático
+            </button>
+            <button
+              id="tab-narrative"
+              class="tab-btn px-6 py-3 text-sm font-medium text-slate-500 hover:text-emerald-600 focus:outline-none whitespace-nowrap"
+              onclick="switchDialect('narrative')"
+            >
+              📖 O Narrativo
+            </button>
+            <button
+              id="tab-imperative"
+              class="tab-btn px-6 py-3 text-sm font-medium text-slate-500 hover:text-amber-600 focus:outline-none whitespace-nowrap"
+              onclick="switchDialect('imperative')"
+            >
+              🛡️ O Imperativo
+            </button>
+          </div>
+
+          <!-- Dynamic Content Grid -->
+          <div
+            class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start fade-in"
+            id="dialect-content"
+          >
+            <!-- Left: Text Info -->
+            <div>
+              <div
+                id="dialect-badge"
+                class="inline-block px-3 py-1 rounded bg-indigo-100 text-indigo-800 text-xs font-bold mb-4"
+              >
+                Lógica Formal
+              </div>
+              <h4
+                id="dialect-title"
+                class="text-3xl font-bold text-slate-900 mb-4"
+              >
+                MathDialect
+              </h4>
+              <p id="dialect-desc" class="text-slate-600 mb-6 text-lg">
+                Use este dialeto quando estiver testando algoritmos puros,
+                cálculos financeiros, regras de negócio complexas ou invariantes
+                de sistema. O teste é visto como uma <strong>prova</strong> de
+                uma verdade universal.
+              </p>
+
+              <div
+                class="bg-slate-50 rounded-xl p-6 border border-slate-200 mb-6"
+              >
+                <h5
+                  class="font-bold text-slate-800 mb-3 flex items-center gap-2"
+                >
+                  ⚡ Vibe & Palavras-Chave
+                </h5>
+                <ul
+                  id="dialect-keywords"
+                  class="space-y-2 text-sm text-slate-600"
+                >
+                  <li class="flex items-center gap-2">
+                    <span class="text-indigo-500">➤</span> Científica, Imutável,
+                    Axiomática
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-slate-400 font-mono">Structure:</span>
+                    axiom, proof
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-slate-400 font-mono">Assert:</span>
+                    implies(x).is(y)
+                  </li>
+                </ul>
+              </div>
+
+              <div
+                class="bg-slate-900 rounded-xl p-6 shadow-xl overflow-hidden"
+              >
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-slate-400 text-xs uppercase tracking-wider"
+                    >Exemplo de Código</span
+                  >
+                  <div class="flex gap-1">
+                    <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                  </div>
+                </div>
+                <pre
+                  id="dialect-code"
+                  class="font-mono text-sm text-indigo-300 overflow-x-auto code-scroll"
+                >
+axiom("Teoria dos Números", () => {
+  const fib = arbitrary(); 
+  // fib é uma função arbitrária
+  fib.derive((n) => n <= 1 ? n : fib(n-1) + fib(n-2));
+
+  proof("Fibonacci(2) implica 1", () => {
+    implies(fib(2)).is(1);
+  });
+});</pre
+                >
+              </div>
+            </div>
+
+            <!-- Right: Visualization -->
+            <div
+              class="bg-slate-50 rounded-2xl p-6 border border-slate-200 flex flex-col items-center justify-center"
+            >
+              <h5
+                class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4"
+              >
+                Adequação do Dialeto
+              </h5>
+              <div class="chart-container">
+                <canvas id="suitabilityChart"></canvas>
+              </div>
+              <p class="text-xs text-center text-slate-400 mt-4">
+                Visualização comparativa de pontos fortes por domínio.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: CODE MORPHER -->
+      <section id="morpher" class="py-16 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-10">
+            <h3 class="text-2xl font-bold text-slate-900">
+              Transformação Semântica
+            </h3>
+            <p class="text-slate-600 mt-2 max-w-2xl mx-auto">
+              Veja como o mesmo teste lógico muda drasticamente de significado
+              para o leitor dependendo do dialeto escolhido.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Math Card -->
+            <div
+              class="bg-white rounded-lg shadow-sm border border-indigo-100 p-6 hover:shadow-md transition cursor-pointer group"
+              onclick="morphCode('math')"
+            >
+              <div class="flex items-center gap-3 mb-4">
+                <div
+                  class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-xl group-hover:bg-indigo-600 group-hover:text-white transition"
+                >
+                  📐
+                </div>
+                <h4 class="font-bold text-slate-800">Matemático</h4>
+              </div>
+              <p class="text-sm text-slate-500 mb-4">
+                Foca na verdade e na invariância.
+              </p>
+              <code
+                class="block bg-indigo-50 text-indigo-900 p-2 rounded text-xs font-mono"
+                >implies(val).is(expected)</code
+              >
+            </div>
+
+            <!-- Narrative Card -->
+            <div
+              class="bg-white rounded-lg shadow-sm border border-emerald-100 p-6 hover:shadow-md transition cursor-pointer group"
+              onclick="morphCode('narrative')"
+            >
+              <div class="flex items-center gap-3 mb-4">
+                <div
+                  class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 font-bold text-xl group-hover:bg-emerald-600 group-hover:text-white transition"
+                >
+                  📖
+                </div>
+                <h4 class="font-bold text-slate-800">Narrativo</h4>
+              </div>
+              <p class="text-sm text-slate-500 mb-4">
+                Foca no comportamento e na história.
+              </p>
+              <code
+                class="block bg-emerald-50 text-emerald-900 p-2 rounded text-xs font-mono"
+                >to(val).be(expected)</code
+              >
+            </div>
+
+            <!-- Imperative Card -->
+            <div
+              class="bg-white rounded-lg shadow-sm border border-amber-100 p-6 hover:shadow-md transition cursor-pointer group"
+              onclick="morphCode('imperative')"
+            >
+              <div class="flex items-center gap-3 mb-4">
+                <div
+                  class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-xl group-hover:bg-amber-600 group-hover:text-white transition"
+                >
+                  🛡️
+                </div>
+                <h4 class="font-bold text-slate-800">Imperativo</h4>
+              </div>
+              <p class="text-sm text-slate-500 mb-4">
+                Foca no contrato e na verificação.
+              </p>
+              <code
+                class="block bg-amber-50 text-amber-900 p-2 rounded text-xs font-mono"
+                >that(val).is(expected)</code
+              >
+            </div>
+          </div>
+
+          <!-- Active Code Block -->
+          <div
+            class="mt-8 bg-slate-900 rounded-xl p-6 shadow-2xl relative overflow-hidden max-w-3xl mx-auto"
+          >
+            <div
+              class="absolute top-0 right-0 bg-slate-800 px-3 py-1 text-xs text-slate-300 rounded-bl-lg font-mono"
+              id="morph-label"
+            >
+              CODE: MATEMÁTICO
+            </div>
+            <pre
+              class="font-mono text-sm text-slate-300 leading-relaxed overflow-x-auto"
+              id="morph-display"
+            >
+// Carregando exemplo...
+                    </pre
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: ROSETTA STONE -->
+      <section id="rosetta" class="py-16 bg-white border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div
+            class="flex flex-col md:flex-row justify-between items-end mb-8 gap-4"
+          >
+            <div class="max-w-2xl">
+              <h3 class="text-2xl font-bold text-slate-900 mb-2">
+                Pedra de Roseta (Comparativo)
+              </h3>
+              <p class="text-slate-600">
+                Use esta tabela interativa para traduzir conceitos do
+                <strong>Jest</strong> para o dialeto escolhido. Filtre por
+                categoria para encontrar rapidamente a função correta.
+              </p>
+            </div>
+            <div class="w-full md:w-64">
+              <label
+                for="categoryFilter"
+                class="block text-xs font-bold text-slate-500 uppercase mb-1"
+                >Filtrar por Categoria</label
+              >
+              <select
+                id="categoryFilter"
+                onchange="filterTable()"
+                class="w-full bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block p-2.5"
+              >
+                <option value="all">Todas as Categorias</option>
+                <option value="Estrutura">Estrutura (Describe/Test)</option>
+                <option value="Asserção">Asserção (Expect)</option>
+                <option value="Mocks">Mocks (Criação/Spy)</option>
+                <option value="Lifecycle">Ciclo de Vida (Hooks)</option>
+              </select>
+            </div>
+          </div>
+
+          <div
+            class="overflow-x-auto shadow-lg rounded-lg border border-slate-200"
+          >
+            <table class="w-full text-left text-sm whitespace-nowrap">
+              <thead
+                class="bg-slate-100 text-slate-700 uppercase font-bold text-xs tracking-wider"
+              >
+                <tr>
+                  <th class="px-6 py-4 border-b border-slate-200">Categoria</th>
+                  <th class="px-6 py-4 border-b border-slate-200">
+                    Jest / Conceito
+                  </th>
+                  <th
+                    class="px-6 py-4 border-b border-slate-200 bg-indigo-50 text-indigo-900"
+                  >
+                    📐 Matemático
+                  </th>
+                  <th
+                    class="px-6 py-4 border-b border-slate-200 bg-emerald-50 text-emerald-900"
+                  >
+                    📖 Narrativo
+                  </th>
+                  <th
+                    class="px-6 py-4 border-b border-slate-200 bg-amber-50 text-amber-900"
+                  >
+                    🛡️ Imperativo
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                id="rosettaBody"
+                class="bg-white divide-y divide-slate-100 font-mono text-slate-600"
+              >
+                <!-- JS Generated Rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: API DISTRIBUTION -->
+      <section class="py-16 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 class="text-2xl font-bold text-slate-900 mb-4">
+                Cobertura da API
+              </h3>
+              <p class="text-slate-600 mb-6">
+                O one-spec-4-all Framework mantém paridade completa de
+                funcionalidades entre os dialetos. Não importa qual linguagem
+                você escolha, você terá acesso ao mesmo poder de mocks, spies e
+                controle de ciclo de vida. O gráfico ao lado demonstra a
+                distribuição de funções disponíveis por categoria.
+              </p>
+              <div
+                class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm"
+              >
+                <div
+                  class="flex items-center justify-between text-sm text-slate-500 mb-2"
+                >
+                  <span>Paridade Funcional</span>
+                  <span class="font-bold text-green-600">100%</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-2.5">
+                  <div
+                    class="bg-slate-800 h-2.5 rounded-full"
+                    style="width: 100%"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex justify-center"
+            >
+              <div class="chart-container">
+                <canvas id="distributionChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-12">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="mb-4 text-2xl">🌐</p>
+        <p class="text-sm">
+          one-spec-4-all Testing Framework Documentation Explorer
+        </p>
+        <p class="text-xs mt-2 opacity-50">
+          Generated based on official README.md
+        </p>
+      </div>
+    </footer>
+
+    <!-- LOGIC -->
+    <script>
+      // --- DATA STORE ---
+      const dialects = {
+        math: {
+          name: "MathDialect",
+          theme: "indigo",
+          icon: "📐",
+          title: "O Matemático",
+          desc: "Baseado em Lógica Formal. Use para algoritmos puros, finanças e invariantes. O teste é uma prova.",
+          keywords: ["axiom", "proof", "implies", "arbitrary"],
+          code: `axiom("Teoria dos Números", () => {
+  const fib = arbitrary(); 
+  fib.derive((n) => n <= 1 ? n : fib(n-1) + fib(n-2));
+
+  proof("Fibonacci(2) implica 1", () => {
+    implies(fib(2)).is(1);
+  });
+});`,
+          radarData: [90, 30, 60, 50, 80], // Logic, UI, API, Doc, Compliance
+        },
+        narrative: {
+          name: "NarrativeDialect",
+          theme: "emerald",
+          icon: "📖",
+          title: "O Narrativo",
+          desc: "Baseado em BDD e Storytelling. Use para fluxos de usuário (E2E) e documentação legível.",
+          keywords: ["intend", "detail", "to", "standIn"],
+          code: `intend("Sistema de Login", () => {
+  const authService = standIn();
+  authService.respondsWith(true);
+
+  detail("o usuário deve conseguir entrar", () => {
+    authService("user", "pass");
+    to(authService).received("user", "pass");
+  });
+});`,
+          radarData: [40, 95, 60, 90, 50],
+        },
+        imperative: {
+          name: "ImperativeDialect",
+          theme: "amber",
+          icon: "🛡️",
+          title: "O Imperativo",
+          desc: "Baseado em Design by Contract. Use para integração, APIs, validação e compliance.",
+          keywords: ["ensure", "check", "that", "stub"],
+          code: `ensure("Integração Gateway", () => {
+  const api = stub();
+  api.forceReturn(200);
+
+  check("resposta respeita contrato v1", () => {
+    const status = api();
+    that(status).is(200);
+    that(api).triggered();
+  });
+});`,
+          radarData: [60, 50, 95, 60, 95],
+        },
+      };
+
+      const rosettaData = [
+        {
+          cat: "Estrutura",
+          jest: "describe",
+          math: "axiom(name, fn)",
+          narr: "intend(name, fn) / story",
+          imp: "ensure(name, fn) / suite",
+        },
+        {
+          cat: "Estrutura",
+          jest: "test / it",
+          math: "proof(name, fn)",
+          narr: "detail(name, fn) / scenario",
+          imp: "check(name, fn) / verify",
+        },
+        {
+          cat: "Asserção",
+          jest: "expect(val).toBe",
+          math: "implies(val).is(expected)",
+          narr: "to(val).be(expected)",
+          imp: "that(val).is(expected)",
+        },
+        {
+          cat: "Asserção",
+          jest: "toHaveBeenCalled",
+          math: "implies(val).wasEvaluated()",
+          narr: "to(val).wasCalled()",
+          imp: "that(val).triggered()",
+        },
+        {
+          cat: "Asserção",
+          jest: "toHaveBeenCalledWith",
+          math: "implies(val).appliedTo(args)",
+          narr: "to(val).received(args)",
+          imp: "that(val).calledWith(args)",
+        },
+        {
+          cat: "Mocks",
+          jest: "jest.fn()",
+          math: "arbitrary() / lambda()",
+          narr: "dummy() / standIn()",
+          imp: "stub() / mock()",
+        },
+        {
+          cat: "Mocks",
+          jest: "jest.spyOn()",
+          math: "monitor(obj, method)",
+          narr: "watch / shadow",
+          imp: "inspect / spy",
+        },
+        {
+          cat: "Mocks",
+          jest: "mockReturnValue",
+          math: "f.yields(val)",
+          narr: "actor.respondsWith(val)",
+          imp: "s.forceReturn(val)",
+        },
+        {
+          cat: "Mocks",
+          jest: "mockResolvedValue",
+          math: "f.convergesTo(val)",
+          narr: "actor.eventuallyGives(val)",
+          imp: "s.resolveWith(val)",
+        },
+        {
+          cat: "Mocks",
+          jest: "mockImplementation",
+          math: "f.derive(fn)",
+          narr: "actor.actsLike(fn)",
+          imp: "s.executes(fn)",
+        },
+        {
+          cat: "Lifecycle",
+          jest: "beforeAll",
+          math: "postulate(fn)",
+          narr: "background(fn)",
+          imp: "initAll(fn)",
+        },
+        {
+          cat: "Lifecycle",
+          jest: "beforeEach",
+          math: "given(fn)",
+          narr: "before(fn)",
+          imp: "reset(fn)",
+        },
+        {
+          cat: "Lifecycle",
+          jest: "afterAll",
+          math: "conclude(fn)",
+          narr: "cleanup(fn)",
+          imp: "disposeAll(fn)",
+        },
+      ];
+
+      // --- STATE & CHARTS ---
+      let currentChart = null;
+      let distributionChart = null;
+
+      // --- INITIALIZATION ---
+      window.onload = function () {
+        renderRosettaTable("all");
+        initCharts();
+        morphCode("math"); // Start with default
+      };
+
+      // --- INTERACTION LOGIC ---
+
+      function switchDialect(key) {
+        const data = dialects[key];
+
+        // Update UI Text
+        document.getElementById("dialect-title").innerText = data.title;
+        document.getElementById("dialect-desc").innerHTML = data.desc.replace(
+          "prova",
+          "<strong>prova</strong>"
+        );
+        document.getElementById("dialect-badge").innerText =
+          key === "math"
+            ? "Lógica Formal"
+            : key === "narrative"
+            ? "Storytelling (BDD)"
+            : "Engenharia de Sistemas";
+        document.getElementById(
+          "dialect-badge"
+        ).className = `inline-block px-3 py-1 rounded text-xs font-bold mb-4 bg-${data.theme}-100 text-${data.theme}-800`;
+
+        // Update Keywords
+        const kwList = document.getElementById("dialect-keywords");
+        kwList.innerHTML = `
+                <li class="flex items-center gap-2"><span class="text-${
+                  data.theme
+                }-500">➤</span> ${data.keywords.join(", ")}</li>
+                <li class="flex items-center gap-2 text-slate-400 text-xs">A escolha semântica altera a percepção do teste.</li>
+            `;
+
+        // Update Code
+        document.getElementById("dialect-code").innerText = data.code;
+        document.getElementById(
+          "dialect-code"
+        ).className = `font-mono text-sm overflow-x-auto code-scroll text-${data.theme}-300`;
+
+        // Update Tabs Styling
+        document.querySelectorAll(".tab-btn").forEach((btn) => {
+          btn.className =
+            "tab-btn px-6 py-3 text-sm font-medium text-slate-500 hover:text-slate-700 focus:outline-none whitespace-nowrap border-b-2 border-transparent";
+        });
+        const activeTab = document.getElementById(`tab-${key}`);
+        activeTab.className = `tab-btn px-6 py-3 text-sm font-medium whitespace-nowrap border-b-2 border-${data.theme}-600 text-${data.theme}-600 font-bold tab-active`;
+
+        // Update Chart
+        updateSuitabilityChart(data.radarData, data.theme, data.title);
+      }
+
+      function morphCode(key) {
+        const data = dialects[key];
+        const display = document.getElementById("morph-display");
+        const label = document.getElementById("morph-label");
+
+        // Fade out
+        display.style.opacity = "0";
+
+        setTimeout(() => {
+          display.innerText = data.code;
+          label.innerText = `CODE: ${data.name.toUpperCase()}`;
+
+          // Color mapping for the dark theme block
+          const colorMap = {
+            math: "text-indigo-300",
+            narrative: "text-emerald-300",
+            imperative: "text-amber-300",
+          };
+          display.className = `font-mono text-sm leading-relaxed overflow-x-auto transition-opacity duration-300 ${colorMap[key]}`;
+
+          // Fade in
+          display.style.opacity = "1";
+        }, 300);
+      }
+
+      function renderRosettaTable(category) {
+        const tbody = document.getElementById("rosettaBody");
+        tbody.innerHTML = "";
+
+        const filtered =
+          category === "all"
+            ? rosettaData
+            : rosettaData.filter((d) => d.cat === category);
+
+        filtered.forEach((row) => {
+          const tr = document.createElement("tr");
+          tr.className = "hover:bg-slate-50 transition-colors";
+          tr.innerHTML = `
+                    <td class="px-6 py-4 font-bold text-xs text-slate-400 uppercase">${row.cat}</td>
+                    <td class="px-6 py-4 font-semibold text-slate-800 bg-slate-50 border-r border-slate-100">${row.jest}</td>
+                    <td class="px-6 py-4 text-indigo-700 font-medium">${row.math}</td>
+                    <td class="px-6 py-4 text-emerald-700 font-medium">${row.narr}</td>
+                    <td class="px-6 py-4 text-amber-700 font-medium">${row.imp}</td>
+                `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      function filterTable() {
+        const select = document.getElementById("categoryFilter");
+        renderRosettaTable(select.value);
+      }
+
+      // --- CHARTS IMPLEMENTATION ---
+
+      function initCharts() {
+        // 1. Suitability Radar Chart
+        const ctx1 = document
+          .getElementById("suitabilityChart")
+          .getContext("2d");
+        currentChart = new Chart(ctx1, {
+          type: "radar",
+          data: {
+            labels: [
+              "Lógica Pura",
+              "UI/UX",
+              "API/Backend",
+              "Documentação",
+              "Compliance",
+            ],
+            datasets: [
+              {
+                label: "O Matemático",
+                data: dialects.math.radarData,
+                fill: true,
+                backgroundColor: "rgba(79, 70, 229, 0.2)",
+                borderColor: "rgb(79, 70, 229)",
+                pointBackgroundColor: "rgb(79, 70, 229)",
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgb(79, 70, 229)",
+              },
+            ],
+          },
+          options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            elements: { line: { tension: 0.3 } },
+            scales: {
+              r: {
+                angleLines: { color: "#e2e8f0" },
+                grid: { color: "#e2e8f0" },
+                pointLabels: {
+                  font: { size: 10, family: "Inter" },
+                  color: "#64748b",
+                },
+                ticks: { display: false, max: 100, min: 0 },
+              },
+            },
+            plugins: {
+              legend: { display: false },
+              tooltip: { enabled: true },
+            },
+          },
+        });
+
+        // 2. API Distribution Bar Chart
+        const counts = {
+          Structure: rosettaData.filter((x) => x.cat === "Estrutura").length,
+          Assertion: rosettaData.filter((x) => x.cat === "Asserção").length,
+          Mocks: rosettaData.filter((x) => x.cat === "Mocks").length,
+          Lifecycle: rosettaData.filter((x) => x.cat === "Lifecycle").length,
+        };
+
+        const ctx2 = document
+          .getElementById("distributionChart")
+          .getContext("2d");
+        distributionChart = new Chart(ctx2, {
+          type: "bar",
+          data: {
+            labels: Object.keys(counts),
+            datasets: [
+              {
+                label: "Funções da API",
+                data: Object.values(counts),
+                backgroundColor: [
+                  "rgba(148, 163, 184, 0.7)",
+                  "rgba(148, 163, 184, 0.7)",
+                  "rgba(71, 85, 105, 0.9)", // Emphasize Mocks are heavy
+                  "rgba(148, 163, 184, 0.7)",
+                ],
+                borderRadius: 6,
+              },
+            ],
+          },
+          options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  title: (context) => `Categoria: ${context[0].label}`,
+                  label: (context) => `${context.raw} Funções Mapeadas`,
+                },
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: { display: false },
+              },
+              x: {
+                grid: { display: false },
+              },
+            },
+          },
+        });
+      }
+
+      function updateSuitabilityChart(data, theme, label) {
+        if (!currentChart) return;
+
+        const colors = {
+          indigo: { bg: "rgba(79, 70, 229, 0.2)", border: "rgb(79, 70, 229)" },
+          emerald: {
+            bg: "rgba(16, 185, 129, 0.2)",
+            border: "rgb(16, 185, 129)",
+          },
+          amber: { bg: "rgba(245, 158, 11, 0.2)", border: "rgb(245, 158, 11)" },
+        };
+
+        currentChart.data.datasets[0].data = data;
+        currentChart.data.datasets[0].label = label;
+        currentChart.data.datasets[0].backgroundColor = colors[theme].bg;
+        currentChart.data.datasets[0].borderColor = colors[theme].border;
+        currentChart.data.datasets[0].pointBackgroundColor =
+          colors[theme].border;
+        currentChart.data.datasets[0].pointHoverBorderColor =
+          colors[theme].border;
+
+        currentChart.update();
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "name": "@purecore/one-spec-4-all",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "suissAI",
+  "license": "Cogfulness Ethical License (CEL) v1.0",
+  "description": "",
+  "bin": {
+    "one-spec-4-all": "./src/cli.ts",
+    "os4all": "./src/cli.ts",
+    "1spec": "./src/cli.ts"
+  },
+  "dependencies": {
+    "undici-types": "~7.16.0",
+    "@types/node": "latest"
+  },
+  "devDependencies": {
+    "typescript": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/suissa/purecore-one-spec-4-all.git"
+  }
+}
