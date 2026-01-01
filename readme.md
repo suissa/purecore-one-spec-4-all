@@ -3,6 +3,8 @@
 </p>
 
 > One Runner to Rule Them All.
+>
+> [Veja o Histórico de Mudanças (CHANGELOG)](./CHANGELOG.md)
 
 A **one-spec-4-all** é uma biblioteca de testes inovadora que desacopla a lógica de execução da semântica de escrita. Acreditamos que a linguagem usada nos testes deve refletir a natureza do problema que está sendo resolvido.
 
