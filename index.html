@@ -102,14 +102,20 @@
           </h1>
         </div>
         <nav class="hidden md:flex gap-6 text-sm font-medium text-slate-600">
+          <a href="#quickstart" class="hover:text-indigo-600 transition"
+            >Quick Start</a
+          >
           <a href="#philosophy" class="hover:text-indigo-600 transition"
             >Filosofias</a
           >
-          <a href="#morpher" class="hover:text-indigo-600 transition"
-            >Code Morpher</a
+          <a href="#chooser" class="hover:text-indigo-600 transition"
+            >Escolher Dialeto</a
           >
           <a href="#rosetta" class="hover:text-indigo-600 transition"
             >Pedra de Roseta</a
+          >
+          <a href="#polyglot" class="hover:text-indigo-600 transition"
+            >Poliglota</a
           >
         </nav>
       </div>
@@ -502,6 +508,357 @@ axiom("Teoria dos Números", () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: QUICK START -->
+      <section
+        id="quickstart"
+        class="py-16 bg-gradient-to-br from-indigo-900 to-slate-900 text-white"
+      >
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-10">
+            <span
+              class="inline-block py-1 px-3 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold tracking-wide uppercase mb-4"
+              >🚀 Quick Start</span
+            >
+            <h3 class="text-3xl font-bold mb-4">
+              Seu Primeiro Teste em 5 Minutos
+            </h3>
+            <p class="text-indigo-200 max-w-2xl mx-auto">
+              Antes de escolher dialetos, veja o framework em ação. Copie, cole
+              e rode.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Step 1 -->
+            <div
+              class="bg-white/10 backdrop-blur rounded-xl p-6 border border-white/20"
+            >
+              <div class="text-3xl font-bold text-indigo-400 mb-2">1</div>
+              <h4 class="font-bold text-lg mb-2">Instale</h4>
+              <code
+                class="block bg-slate-800 text-emerald-400 p-3 rounded text-sm font-mono"
+                >npm install @purecore/one-spec-4-all</code
+              >
+            </div>
+            <!-- Step 2 -->
+            <div
+              class="bg-white/10 backdrop-blur rounded-xl p-6 border border-white/20"
+            >
+              <div class="text-3xl font-bold text-indigo-400 mb-2">2</div>
+              <h4 class="font-bold text-lg mb-2">Crie um teste</h4>
+              <p class="text-sm text-indigo-200">
+                Arquivo: <code class="text-amber-300">api.spec.ts</code>
+              </p>
+            </div>
+            <!-- Step 3 -->
+            <div
+              class="bg-white/10 backdrop-blur rounded-xl p-6 border border-white/20"
+            >
+              <div class="text-3xl font-bold text-indigo-400 mb-2">3</div>
+              <h4 class="font-bold text-lg mb-2">Execute</h4>
+              <code
+                class="block bg-slate-800 text-emerald-400 p-3 rounded text-sm font-mono"
+                >npx one-spec-4-all</code
+              >
+            </div>
+          </div>
+
+          <!-- Code Example -->
+          <div
+            class="bg-slate-900 rounded-xl p-6 shadow-2xl border border-slate-700"
+          >
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-slate-400 text-xs uppercase tracking-wider"
+                >api.spec.ts</span
+              >
+              <div class="flex gap-1">
+                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                <span class="w-3 h-3 rounded-full bg-green-500"></span>
+              </div>
+            </div>
+            <pre class="font-mono text-sm text-amber-300 overflow-x-auto">
+import { ensure, check, that, stub } from "@purecore/one-spec-4-all";
+
+ensure("Minha API de Usuários", () => {
+  const api = stub();
+  api.forceReturn({ status: 200, id: "user_123" });
+
+  check("Criação de usuário retorna 200 OK", () => {
+    const response = api.createUser({ name: "João" });
+    
+    that(response.status).is(200);
+    that(response.id).matches(/^user_\w+$/);
+  });
+});</pre
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 6: DIALECT CHOOSER -->
+      <section id="chooser" class="py-16 bg-white border-t border-slate-200">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-12">
+            <h3 class="text-2xl font-bold text-slate-900 mb-4">
+              🧭 Qual Dialeto é Para Você?
+            </h3>
+            <p class="text-slate-600 max-w-2xl mx-auto">
+              Você <strong>não precisa aprender os três</strong>. Escolha o que
+              se encaixa no seu mundo e ignore o resto. O framework é poliglota;
+              você não precisa ser.
+            </p>
+          </div>
+
+          <!-- Flowchart -->
+          <div
+            class="bg-slate-50 rounded-2xl p-8 border border-slate-200 mb-12"
+          >
+            <pre
+              class="font-mono text-xs md:text-sm text-slate-700 overflow-x-auto text-center leading-relaxed"
+            >
+                          ┌─────────────────────────────────────────┐
+                          │   O que você está testando?             │
+                          └───────────────────┬─────────────────────┘
+                                              │
+              ┌───────────────────────────────┼───────────────────────────────┐
+              │                               │                               │
+              ▼                               ▼                               ▼
+   ┌──────────────────────┐      ┌──────────────────────┐      ┌──────────────────────┐
+   │ Algoritmos puros,    │      │ Fluxos de usuário,   │      │ APIs, contratos,     │
+   │ cálculos, regras     │      │ regras de negócio    │      │ integrações,         │
+   │ matemáticas?         │      │ legíveis por PMs?    │      │ conformidade?        │
+   └──────────┬───────────┘      └──────────┬───────────┘      └──────────┬───────────┘
+              │                               │                               │
+              ▼                               ▼                               ▼
+   ┌──────────────────────┐      ┌──────────────────────┐      ┌──────────────────────┐
+   │ 📐 MATEMÁTICO        │      │ 📖 NARRATIVO         │      │ 🛡️ IMPERATIVO        │
+   │ axiom, proof, implies│      │ intend, scenario, to │      │ ensure, check, that  │
+   └──────────────────────┘      └──────────────────────┘      └──────────────────────┘
+            </pre>
+          </div>
+
+          <!-- Pain Point Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Math Pain -->
+            <div
+              class="bg-indigo-50 rounded-xl p-6 border-2 border-indigo-100 hover:border-indigo-300 transition"
+            >
+              <div class="text-3xl mb-4">📐</div>
+              <h4 class="font-bold text-indigo-900 mb-3">Dialeto Matemático</h4>
+              <div
+                class="bg-white rounded-lg p-4 mb-4 border border-indigo-100"
+              >
+                <p class="text-sm text-slate-600 mb-2">
+                  <strong class="text-red-600">😤 A Dor:</strong>
+                </p>
+                <p class="text-sm text-slate-500 italic">
+                  "Escrever <code>describe</code> e <code>it</code> para provar
+                  um algoritmo soa informal e impreciso."
+                </p>
+              </div>
+              <div class="bg-white rounded-lg p-4 border border-indigo-100">
+                <p class="text-sm text-slate-600 mb-2">
+                  <strong class="text-green-600">💡 A Solução:</strong>
+                </p>
+                <code class="text-xs text-indigo-700 font-mono"
+                  >axiom("Teorema", () => proof("...", () =>
+                  implies(x).is(y)))</code
+                >
+              </div>
+            </div>
+
+            <!-- Narrative Pain -->
+            <div
+              class="bg-emerald-50 rounded-xl p-6 border-2 border-emerald-100 hover:border-emerald-300 transition"
+            >
+              <div class="text-3xl mb-4">📖</div>
+              <h4 class="font-bold text-emerald-900 mb-3">Dialeto Narrativo</h4>
+              <div
+                class="bg-white rounded-lg p-4 mb-4 border border-emerald-100"
+              >
+                <p class="text-sm text-slate-600 mb-2">
+                  <strong class="text-red-600">😤 A Dor:</strong>
+                </p>
+                <p class="text-sm text-slate-500 italic">
+                  "Seu PM precisa validar regras de negócio, mas não consegue
+                  ler seus testes."
+                </p>
+              </div>
+              <div class="bg-white rounded-lg p-4 border border-emerald-100">
+                <p class="text-sm text-slate-600 mb-2">
+                  <strong class="text-green-600">💡 A Solução:</strong>
+                </p>
+                <code class="text-xs text-emerald-700 font-mono"
+                  >scenario("Usuário tenta acessar...", () =>
+                  to(response).be(403))</code
+                >
+              </div>
+            </div>
+
+            <!-- Imperative Pain -->
+            <div
+              class="bg-amber-50 rounded-xl p-6 border-2 border-amber-100 hover:border-amber-300 transition"
+            >
+              <div class="text-3xl mb-4">🛡️</div>
+              <h4 class="font-bold text-amber-900 mb-3">Dialeto Imperativo</h4>
+              <div class="bg-white rounded-lg p-4 mb-4 border border-amber-100">
+                <p class="text-sm text-slate-600 mb-2">
+                  <strong class="text-red-600">😤 A Dor:</strong>
+                </p>
+                <p class="text-sm text-slate-500 italic">
+                  "A linguagem do teste não impõe o respeito que o contrato de
+                  API exige."
+                </p>
+              </div>
+              <div class="bg-white rounded-lg p-4 border border-amber-100">
+                <p class="text-sm text-slate-600 mb-2">
+                  <strong class="text-green-600">💡 A Solução:</strong>
+                </p>
+                <code class="text-xs text-amber-700 font-mono"
+                  >ensure("Conformidade v2", () => verify("...", () =>
+                  that(x).is(y)))</code
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 7: POLYGLOT EXAMPLE -->
+      <section id="polyglot" class="py-16 bg-slate-900 text-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-10">
+            <span
+              class="inline-block py-1 px-3 rounded-full bg-slate-700 text-slate-300 text-xs font-bold tracking-wide uppercase mb-4"
+              >🎭 Modo Poliglota</span
+            >
+            <h3 class="text-3xl font-bold mb-4">
+              Exemplo: Carrinho de Compras (3 Dialetos)
+            </h3>
+            <p class="text-slate-400 max-w-2xl mx-auto">
+              Use cada dialeto para a camada certa. Todos no mesmo arquivo.
+            </p>
+          </div>
+
+          <!-- Layer Explanation -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div
+              class="bg-indigo-900/50 rounded-lg p-4 border border-indigo-500/30 text-center"
+            >
+              <div class="text-2xl mb-2">📐</div>
+              <p class="text-indigo-300 text-sm font-medium">
+                Cálculos de Preço
+              </p>
+              <p class="text-xs text-indigo-400">Provas matemáticas puras</p>
+            </div>
+            <div
+              class="bg-emerald-900/50 rounded-lg p-4 border border-emerald-500/30 text-center"
+            >
+              <div class="text-2xl mb-2">📖</div>
+              <p class="text-emerald-300 text-sm font-medium">
+                Jornada do Usuário
+              </p>
+              <p class="text-xs text-emerald-400">Documentação viva para PMs</p>
+            </div>
+            <div
+              class="bg-amber-900/50 rounded-lg p-4 border border-amber-500/30 text-center"
+            >
+              <div class="text-2xl mb-2">🛡️</div>
+              <p class="text-amber-300 text-sm font-medium">
+                Gateway de Pagamento
+              </p>
+              <p class="text-xs text-amber-400">Contratos rígidos de API</p>
+            </div>
+          </div>
+
+          <!-- Code -->
+          <div
+            class="bg-slate-800 rounded-xl p-6 shadow-2xl border border-slate-700 overflow-x-auto"
+          >
+            <pre
+              class="font-mono text-xs md:text-sm text-slate-300 leading-relaxed"
+            >
+<span class="text-slate-500">// 📐 CAMADA MATEMÁTICA: Lógica Pura de Preços</span>
+<span class="text-indigo-400">axiom</span>(<span class="text-emerald-300">"Teoria de Cálculo de Preços"</span>, () => {
+  <span class="text-indigo-400">proof</span>(<span class="text-emerald-300">"Desconto de 10% em R$100 implica R$90"</span>, () => {
+    <span class="text-indigo-400">implies</span>(calcDiscount(100, 10)).<span class="text-amber-400">is</span>(90);
+  });
+});
+
+<span class="text-slate-500">// 📖 CAMADA NARRATIVA: Jornada do Usuário</span>
+<span class="text-emerald-400">intend</span>(<span class="text-emerald-300">"Jornada de Compra do Usuário"</span>, () => {
+  <span class="text-emerald-400">scenario</span>(<span class="text-emerald-300">"Usuário adiciona produto ao carrinho"</span>, () => {
+    cart.add({ name: "Camiseta", price: 49.9 });
+    <span class="text-emerald-400">to</span>(cart).<span class="text-amber-400">wasCalled</span>();
+  });
+});
+
+<span class="text-slate-500">// 🛡️ CAMADA IMPERATIVA: Integração com Gateway</span>
+<span class="text-amber-400">ensure</span>(<span class="text-emerald-300">"Conformidade com Gateway de Pagamento v2.1"</span>, () => {
+  <span class="text-amber-400">check</span>(<span class="text-emerald-300">"Transação bem-sucedida retorna status 200"</span>, () => {
+    const response = paymentGateway.process({ amount: 99.9 });
+    <span class="text-amber-400">that</span>(response.status).<span class="text-amber-400">is</span>(200);
+    <span class="text-amber-400">that</span>(response.transactionId).<span class="text-amber-400">matches</span>(/^tx_[a-z0-9]+$/);
+  });
+});
+            </pre>
+          </div>
+          <p class="text-center text-slate-500 text-sm mt-4">
+            📁 Veja o exemplo completo em
+            <code class="text-indigo-400"
+              >examples/polyglot-shopping-cart.spec.ts</code
+            >
+          </p>
+        </div>
+      </section>
+
+      <!-- SECTION 8: MIGRATION -->
+      <section
+        id="migration"
+        class="py-16 bg-emerald-50 border-t border-emerald-100"
+      >
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <span
+            class="inline-block py-1 px-3 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold tracking-wide uppercase mb-4"
+            >🔄 Migração Gradual</span
+          >
+          <h3 class="text-2xl font-bold text-slate-900 mb-4">
+            Você tem 5.000 testes em Jest?
+          </h3>
+          <p class="text-slate-600 mb-8 text-lg">
+            <strong>Não reescreva nada.</strong> O one-spec-4-all entende
+            nativamente a sintaxe do Jest. Seu código legado continua
+            funcionando.
+          </p>
+
+          <div
+            class="bg-white rounded-xl p-6 shadow-md border border-emerald-200 text-left max-w-2xl mx-auto"
+          >
+            <pre class="font-mono text-sm overflow-x-auto">
+<span class="text-slate-500">// ✅ Legado: Ninguém precisa mexer nisso</span>
+<span class="text-slate-700">describe</span>(<span class="text-emerald-600">"Módulo de Login (Legacy)"</span>, () => {
+  <span class="text-slate-700">it</span>(<span class="text-emerald-600">"deve validar senha"</span>, () => {
+    <span class="text-slate-700">expect</span>(validar(<span class="text-emerald-600">"123"</span>)).toBe(<span class="text-amber-600">true</span>);
+  });
+});
+
+<span class="text-slate-500">// ✅ Novo: Feature nova com dialeto novo</span>
+<span class="text-indigo-600">axiom</span>(<span class="text-emerald-600">"Nova Criptografia SHA-256"</span>, () => {
+  <span class="text-indigo-600">implies</span>(hash(<span class="text-emerald-600">"123"</span>)).matches(<span class="text-amber-600">/^[a-f0-9]{64}$/</span>);
+});
+            </pre>
+          </div>
+          <p class="text-slate-500 text-sm mt-6">
+            Um único comando
+            <code class="bg-slate-100 px-2 py-1 rounded text-slate-700"
+              >npm test</code
+            >
+            executa <strong>ambos</strong>. Mesmo relatório. Mesma cobertura.
+          </p>
         </div>
       </section>
     </main>
