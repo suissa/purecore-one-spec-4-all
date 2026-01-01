@@ -368,4 +368,53 @@ export const ClassicDialect = {
   afterEach: (f: VoidFn) => core.addHook("afterEach", f),
 };
 
-// End of library exports
+// --- Top-Level Exports for Ease of Use ---
+export const {
+  axiom,
+  proof,
+  implies,
+  arbitrary,
+  lambda,
+  monitor,
+  postulate,
+  conclude,
+  given,
+} = MathDialect;
+export const {
+  intend,
+  story,
+  detail,
+  scenario,
+  to,
+  dummy,
+  standIn,
+  watch,
+  shadow,
+  background,
+  cleanup,
+  before,
+} = NarrativeDialect;
+export const {
+  ensure,
+  suite,
+  check,
+  verify,
+  that,
+  stub,
+  mock,
+  inspect,
+  spy,
+  initAll,
+  disposeAll,
+  reset,
+} = ImperativeDialect;
+export const {
+  describe,
+  it,
+  test,
+  expect,
+  beforeAll,
+  afterAll,
+  beforeEach,
+  afterEach,
+} = ClassicDialect;

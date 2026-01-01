@@ -16,7 +16,7 @@ Abaixo explicamos o "Porquê" de cada idioma e listamos sua API completa.
 
 **Filosofia:** Baseado em Lógica Formal e Programação Funcional.
 
-Use este dialeto quando estiver testando algoritmos puros, cálculos financeiros, regras de negócio complexas ou invariantes de sistema. O teste é visto como uma prova de uma verdade universal.
+Este dialeto trata o código como um conjunto de teoremas matemáticos que precisam ser provados. Ele elimina a ambiguidade da linguagem natural, focando em asserções precisas e relações de causa e efeito. É ideal para testar algoritmos puros, bibliotecas de utilitários, cálculos financeiros ou qualquer lógica onde a correção é absoluta e independente de estado externo. Aqui, você não "testa" se funciona, você **prova** que é verdade.
 
 - **Vibe:** Científica, Imutável, Axiomática.
 
@@ -39,17 +39,43 @@ Use este dialeto quando estiver testando algoritmos puros, cálculos financeiros
 |               | `given(fn)`                       | "Dado que..." (antes de cada prova).      | `beforeEach`            |
 |               | `conclude(fn)`                    | Conclusões finais / limpeza.              | `afterAll`              |
 
-#### Exemplo
+#### Exemplo Completo
 
 ```javascript
-import { axiom, proof, implies, arbitrary } from "one-spec-4-all-tester";
+import {
+  axiom,
+  proof,
+  implies,
+  arbitrary,
+  given,
+} from "@purecore/one-spec-4-all";
 
-axiom("Teoria dos Números", () => {
-  const fib = arbitrary();
-  fib.derive((n) => (n <= 1 ? n : fib(n - 1) + fib(n - 2)));
+/* Vamos provar a correção de um cálculo de juros compostos */
+axiom("Teoria de Juros Compostos", () => {
+  let calcInterest;
+  const logger = arbitrary(); // Um mock arbitrário
 
-  proof("Fibonacci(2) implica 1", () => {
-    implies(fib(2)).is(1);
+  given(() => {
+    // Definimos a função pura a ser testada a cada ciclo
+    calcInterest = (p, r, t) => Math.floor(p * Math.pow(1 + r, t));
+  });
+
+  proof("Capital de 1000 a 5% por 2 anos implica montante de 1102", () => {
+    const result = calcInterest(1000, 0.05, 2);
+    implies(result).is(1102);
+  });
+
+  proof("Taxa zero implica preservação do capital", () => {
+    const result = calcInterest(500, 0, 10);
+    implies(result).is(500);
+  });
+
+  proof("Logger arbitrário registra cálculo", () => {
+    logger.yields(true);
+    logger("calc_start");
+
+    implies(logger).wasEvaluated();
+    implies(logger).appliedTo("calc_start");
   });
 });
 ```
@@ -60,7 +86,7 @@ axiom("Teoria dos Números", () => {
 
 **Filosofia:** Baseado em BDD (Behavior Driven Development) e Storytelling.
 
-Use este dialeto para testes de aceitação, fluxos de usuário (E2E) ou quando o código precisa servir como documentação legível para não-programadores (PMs, Designers).
+O dialeto Narrativo foi criado para transformar testes em documentação viva. Ele prioriza a legibilidade humana, permitindo que Product Managers e Designers leiam o código e entendam as regras de negócio. Ao invés de checar bits e bytes, você descreve cenários, intenções e expectativas de comportamento. É a escolha perfeita para testes de fluxos de usuário (User Journeys) e requisitos de negócio de alto nível.
 
 - **Vibe:** Fluida, Humana, Descritiva.
 
@@ -86,18 +112,40 @@ Use este dialeto para testes de aceitação, fluxos de usuário (E2E) ou quando 
 |               | `before(fn)`                 | Antes de cada cena.                  | `beforeEach`           |
 |               | `cleanup(fn)`                | Limpeza após a história.             | `afterAll`             |
 
-#### Exemplo
+#### Exemplo Completo
 
 ```javascript
-import { intend, detail, to, standIn } from "one-spec-4-all-tester";
+import {
+  intend,
+  scenario,
+  to,
+  standIn,
+  background,
+} from "@purecore/one-spec-4-all";
 
-intend("Sistema de Login", () => {
-  const authService = standIn();
-  authService.respondsWith(true);
+intend("Fluxo de Autenticação do Usuário", () => {
+  const authService = standIn(); // Um dublê para o serviço real
+  const database = standIn();
 
-  detail("o usuário deve conseguir entrar", () => {
-    authService("user", "pass");
-    to(authService).received("user", "pass");
+  background(() => {
+    // Configura o cenário de fundo
+    authService.respondsWith({ token: "abc-123" });
+    database.respondsWith(true);
+  });
+
+  scenario("Login com credenciais válidas deve retornar token", () => {
+    const response = authService.login("usuario", "senha_secreta");
+
+    to(response).have("token");
+    to(response.token).be("abc-123");
+
+    // O serviço deve ter recebido os argumentos corretos
+    to(authService).received("login", "usuario", "senha_secreta"); // (exemplo simplificado)
+  });
+
+  scenario("Tentativa de login deve logar tentativa no banco", () => {
+    database.logAttempt("usuario");
+    to(database).wasCalled();
   });
 });
 ```
@@ -108,7 +156,7 @@ intend("Sistema de Login", () => {
 
 **Filosofia:** Baseado em Design by Contract e Engenharia de Sistemas.
 
-Use para testes de integração, validação de APIs, verificação de tipos e sistemas onde a segurança e a conformidade (compliance) são prioritárias.
+Este dialeto é para quem precisa de rigor. Ele foca na verificação explícita de contratos, estados e integridade do sistema. A linguagem é autoritária e técnica, ideal para validar integrações de API, drivers de banco de dados, e conformidade com especificações (RFCs). Se você está construindo a infraestrutura que outros vão usar, este é o seu dialeto.
 
 - **Vibe:** Técnica, Rigorosa, "Crachá de Engenheiro".
 
@@ -136,19 +184,29 @@ Use para testes de integração, validação de APIs, verificação de tipos e s
 |               | `reset(fn)`                   | Reset de estado (antes de cada).   | `beforeEach`            |
 |               | `disposeAll(fn)`              | Descarte de recursos (teardown).   | `afterAll`              |
 
-#### Exemplo
+#### Exemplo Completo
 
 ```javascript
-import { ensure, check, that, stub } from "one-spec-4-all-tester";
+import { ensure, check, that, stub, initAll } from "@purecore/one-spec-4-all";
 
-ensure("Integração de Gateway de Pagamento", () => {
-  const api = stub();
-  api.forceReturn(200);
+ensure("Conformidade do Gateway de Pagamento", () => {
+  const apiGateway = stub();
 
-  check("resposta respeita contrato v1", () => {
-    const status = api();
-    that(status).is(200);
-    that(api).triggered();
+  initAll(() => {
+    // Inicializa stubs de infraestrutura
+    apiGateway.forceReturn({ status: 200, transactionId: "tx_999" });
+  });
+
+  check("Transação bem-sucedida retorna 200 OK", () => {
+    const response = apiGateway.process({ amount: 50.0 });
+
+    that(response.status).is(200);
+    that(response.transactionId).matches(/^tx_\d+$/);
+  });
+
+  check("Gateway deve ser acionado apenas uma vez por request", () => {
+    that(apiGateway).triggeredCount(1);
+    that(apiGateway).calledWith({ amount: 50.0 });
   });
 });
 ```
@@ -180,8 +238,8 @@ Use esta tabela para traduzir mentalmente conceitos do Jest para o seu dialeto e
 Como todos os dialetos compartilham a mesma `AtomicCore` engine, você pode importar e misturar dialetos no mesmo arquivo se desejar expressar diferentes partes do sistema de formas diferentes.
 
 ```javascript
-import { axiom, implies } from "one-spec-4-all-tester"; // Matemático para lógica
-import { intend, to } from "one-spec-4-all-tester"; // Narrativo para UI
+import { axiom, implies } from "@purecore/one-spec-4-all"; // Matemático para lógica
+import { intend, to } from "@purecore/one-spec-4-all"; // Narrativo para UI
 
 axiom("Core Logic", () => {
   // ... testes lógicos
