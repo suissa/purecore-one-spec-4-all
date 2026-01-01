@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0]
+
+### What's Changed
+
+- :rocket: **release**: Version bump to 0.2.0.
+- :wrench: **chore**: Added `testall` as a CLI binary alias in `package.json`.
+- :art: **style**: Standardized `readme.md` headings to sentence case (only first word capitalized).
+- :sparkles: **feat**: Implemented `critica2.md` suggestions with visual proofs of coexistence and strategic sections for leadership.
+
 ## [0.1.0]
 
 ### What's Changed
