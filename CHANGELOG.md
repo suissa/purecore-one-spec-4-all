@@ -18,3 +18,10 @@ All notable changes to this project will be documented in this file.
   - Added "A Dor Que Resolvemos" pain-point sections before each dialect
   - Moved advanced topics (Rosetta Table, Polyglot Mode) to the end
   - Added gradual adoption/migration guide
+- :sparkles: **feat**: Complete CLI rewrite with Vitest-style output:
+  - ANSI color palette (green/red/yellow/cyan)
+  - Spinner animation during test execution
+  - Per-file timer showing elapsed time
+  - Grouped test results with indentation
+  - Summary statistics (files, tests, duration)
+  - Exit codes based on test results
