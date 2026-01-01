@@ -25,3 +25,9 @@ All notable changes to this project will be documented in this file.
   - Grouped test results with indentation
   - Summary statistics (files, tests, duration)
   - Exit codes based on test results
+- :sparkles: **feat**: README restructure following critica2.md podcast:
+  - Visual proof of legacy coexistence (Jest + dialeto) at the very top
+  - New "Por Que Adotar no Seu Time?" section for tech leads/managers
+  - Progressive disclosure: API summaries in README, full docs linked separately
+  - Created `/docs/api-imperativo.md`, `/docs/api-matematico.md`, `/docs/api-narrativo.md`
+  - Reordered sections: Trust → Strategy → Quick Start → Choose Dialect
