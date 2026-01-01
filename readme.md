@@ -390,20 +390,104 @@ Um único comando `npm test` executa **ambos**. Mesmo relatório. Mesma cobertur
 
 ### Uso Misto (Modo Poliglota)
 
-Como todos os dialetos compartilham a mesma `AtomicCore` engine, você pode misturá-los no mesmo arquivo:
+Como todos os dialetos compartilham a mesma `AtomicCore` engine, você pode misturá-los no mesmo arquivo. O segredo é usar **cada dialeto para a camada certa**:
+
+| Camada                 | Dialeto       | Por quê?                                   |
+| ---------------------- | ------------- | ------------------------------------------ |
+| **Cálculos puros**     | 📐 Matemático | Provas de verdades universais, sem estado  |
+| **Jornada do usuário** | 📖 Narrativo  | Documentação viva legível por PMs          |
+| **Integração de API**  | 🛡️ Imperativo | Contratos rígidos, conformidade, auditoria |
+
+#### Exemplo Completo: Carrinho de Compras
 
 ```javascript
-import { axiom, implies } from "@purecore/one-spec-4-all"; // Matemático para lógica
-import { intend, to } from "@purecore/one-spec-4-all"; // Narrativo para UI
+import {
+  // 📐 Matemático - lógica pura de preços
+  axiom,
+  proof,
+  implies,
+  given,
+  // 📖 Narrativo - jornada do usuário
+  intend,
+  scenario,
+  to,
+  standIn,
+  background,
+  // 🛡️ Imperativo - integração com gateway
+  ensure,
+  check,
+  that,
+  stub,
+  initAll,
+} from "@purecore/one-spec-4-all";
 
-axiom("Core Logic", () => {
-  // ... provas matemáticas
+// =============================================================================
+// 📐 CAMADA MATEMÁTICA: Lógica Pura de Preços
+// =============================================================================
+axiom("Teoria de Cálculo de Preços", () => {
+  let calcDiscount;
+
+  given(() => {
+    calcDiscount = (price, percent) => price - price * (percent / 100);
+  });
+
+  proof("Desconto de 10% em R$100 implica R$90", () => {
+    implies(calcDiscount(100, 10)).is(90);
+  });
+
+  proof("Desconto de 0% preserva o valor original", () => {
+    implies(calcDiscount(250, 0)).is(250);
+  });
 });
 
-intend("User Interface", () => {
-  // ... cenários de usuário
+// =============================================================================
+// 📖 CAMADA NARRATIVA: Jornada do Usuário
+// =============================================================================
+intend("Jornada de Compra do Usuário", () => {
+  const cart = standIn();
+
+  background(() => {
+    cart.respondsWith({ items: [], total: 0 });
+  });
+
+  scenario("Usuário adiciona produto ao carrinho", () => {
+    cart.add({ name: "Camiseta", price: 49.9 });
+    to(cart).wasCalled();
+  });
+
+  scenario("Usuário aplica cupom de desconto", () => {
+    cart.applyCoupon("DESCONTO15");
+    cart.respondsWith({ total: 42.42 });
+    to(cart.total).be(42.42);
+  });
+});
+
+// =============================================================================
+// 🛡️ CAMADA IMPERATIVA: Integração com Gateway de Pagamento
+// =============================================================================
+ensure("Conformidade com Gateway de Pagamento v2.1", () => {
+  const paymentGateway = stub();
+
+  initAll(() => {
+    paymentGateway.forceReturn({
+      status: 200,
+      transactionId: "tx_abc123",
+    });
+  });
+
+  check("Transação bem-sucedida retorna status 200", () => {
+    const response = paymentGateway.process({ amount: 99.9 });
+    that(response.status).is(200);
+    that(response.transactionId).matches(/^tx_[a-z0-9]+$/);
+  });
+
+  check("Gateway deve ser acionado apenas uma vez", () => {
+    that(paymentGateway).triggeredCount(1);
+  });
 });
 ```
+
+> 📁 Veja o exemplo completo em [`examples/polyglot-shopping-cart.spec.ts`](./examples/polyglot-shopping-cart.spec.ts)
 
 ## 🏃 Executando os Testes
 
