@@ -12,27 +12,27 @@ Testar um algoritmo matemático complexo exige um vocabulário diferente de test
 
 ## Comparativo
 
-| Conceito / Jest                       | 📐 Matemático (Lógico/Funcional) | 📖 Narrativo (BDD/Humano) | 🛡️ Imperativo (Técnico/Contrato) |
-| :------------------------------------ | :------------------------------- | :------------------------ | :------------------------------- |
-| **--- Estrutura & Execução ---**      |                                  |                           |                                  |
-| `describe()`                          | `axiom()`                        | `intend()` / `story()`    | `ensure()` / `suite()`           |
-| `it()` / `test()`                     | `proof()` / `lemma()`            | `detail()` / `scenario()` | `check()` / `verify()`           |
-| `expect(x)`                           | `implies(x)`                     | `to(x)` / `expect(x)`     | `that(x)`                        |
-| **--- Criação de Mocks ---**          |                                  |                           |                                  |
-| `jest.fn()`                           | `arbitrary()` / `lambda()`       | `dummy()` / `standIn()`   | `stub()` / `mock()`              |
-| `jest.spyOn()`                        | `monitor()`                      | `watch()` / `shadow()`    | `inspect()` / `spy()`            |
-| **--- Configuração de Mocks ---**     |                                  |                           |                                  |
-| `mockReturnValue(v)`                  | `yields(v)` / `mapsTo(v)`        | `respondsWith(v)`         | `forceReturn(v)`                 |
-| `mockResolvedValue(v)`                | `convergesTo(v)`                 | `eventuallyGives(v)`      | `resolveWith(v)`                 |
-| `mockImplementation(fn)`              | `derive(fn)`                     | `actsLike(fn)`            | `executes(fn)`                   |
-| **--- Validação de Chamadas ---**     |                                  |                           |                                  |
-| `toHaveBeenCalled()`                  | `.wasEvaluated()`                | `.wasCalled()`            | `.triggered()`                   |
-| `toHaveBeenCalledWith(x)`             | `.appliedTo(x)`                  | `.received(x)`            | `.calledWith(x)`                 |
-| `toHaveBeenCalledTimes(n)`            | `.evaluated(n).times`            | `.called(n).times`        | `.triggeredCount(n)`             |
-| **--- Ciclo de Vida (Lifecycle) ---** |                                  |                           |                                  |
-| `beforeAll()`                         | `postulate()` / `setup()`        | `background()`            | `initAll()`                      |
-| `afterAll()`                          | `conclude()`                     | `cleanup()`               | `disposeAll()`                   |
-| `beforeEach()`                        | `given()`                        | `before()`                | `reset()`                        |
+| Conceito / Jest               | 📐 Matemático (Lógico/Funcional) | 📖 Narrativo (BDD/Humano) | 🛡️ Imperativo (Técnico/Contrato) |
+| :---------------------------- | :------------------------------- | :------------------------ | :------------------------------- |
+| **Estrutura & Execução**      |                                  |                           |                                  |
+| `describe()`                  | `axiom()`                        | `intend()` / `story()`    | `ensure()` / `suite()`           |
+| `it()` / `test()`             | `proof()` / `lemma()`            | `detail()` / `scenario()` | `check()` / `verify()`           |
+| `expect(x)`                   | `implies(x)`                     | `to(x)` / `expect(x)`     | `that(x)`                        |
+| **Criação de Mocks**          |                                  |                           |                                  |
+| `jest.fn()`                   | `arbitrary()` / `lambda()`       | `dummy()` / `standIn()`   | `stub()` / `mock()`              |
+| `jest.spyOn()`                | `monitor()`                      | `watch()` / `shadow()`    | `inspect()` / `spy()`            |
+| **Configuração de Mocks**     |                                  |                           |                                  |
+| `mockReturnValue(v)`          | `yields(v)` / `mapsTo(v)`        | `respondsWith(v)`         | `forceReturn(v)`                 |
+| `mockResolvedValue(v)`        | `convergesTo(v)`                 | `eventuallyGives(v)`      | `resolveWith(v)`                 |
+| `mockImplementation(fn)`      | `derive(fn)`                     | `actsLike(fn)`            | `executes(fn)`                   |
+| **Validação de Chamadas**     |                                  |                           |                                  |
+| `toHaveBeenCalled()`          | `.wasEvaluated()`                | `.wasCalled()`            | `.triggered()`                   |
+| `toHaveBeenCalledWith(x)`     | `.appliedTo(x)`                  | `.received(x)`            | `.calledWith(x)`                 |
+| `toHaveBeenCalledTimes(n)`    | `.evaluated(n).times`            | `.called(n).times`        | `.triggeredCount(n)`             |
+| **Ciclo de Vida (Lifecycle)** |                                  |                           |                                  |
+| `beforeAll()`                 | `postulate()` / `setup()`        | `background()`            | `initAll()`                      |
+| `afterAll()`                  | `conclude()`                     | `cleanup()`               | `disposeAll()`                   |
+| `beforeEach()`                | `given()`                        | `before()`                | `reset()`                        |
 
 ## 🎭 Os Dialetos
 
