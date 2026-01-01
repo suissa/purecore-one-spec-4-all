@@ -10,6 +10,10 @@ All notable changes to this project will be documented in this file.
 - :wrench: **chore**: Added `testall` as a CLI binary alias in `package.json`.
 - :art: **style**: Standardized `readme.md` headings to sentence case (only first word capitalized).
 - :sparkles: **feat**: Implemented `critica2.md` suggestions with visual proofs of coexistence and strategic sections for leadership.
+- :zap: **perf**: Enhanced core engine with Deep Proxies for mocks, supporting automatic method mocking.
+- :recycle: **refactor**: Implemented "Call Bubbling" in mocks to allow verifying object interactions via parent mocks.
+- :bug: **fix**: Fixed `beforeAll` and `afterAll` hook execution in the test runner.
+- :white_check_mark: **test**: Verified and fixed all examples, achieving 100% pass rate on the polyglot test suite.
 
 ## [0.1.0]
 
