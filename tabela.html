@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>one-spec-4-all Testing Framework - Rosetta Stone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 text-slate-800 p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+      <header class="mb-10 text-center">
+        <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-2">
+          one-spec-4-all Testing Framework
+        </h1>
+        <p class="text-lg text-slate-600">Matriz de Tradução Semântica</p>
+      </header>
+
+      <!-- Tabela Principal -->
+      <div class="overflow-x-auto shadow-xl rounded-lg border border-slate-200">
+        <table class="w-full text-left text-sm bg-white">
+          <thead class="bg-slate-900 text-slate-50 uppercase tracking-wider">
+            <tr>
+              <th class="px-6 py-4 font-bold border-r border-slate-700 w-1/5">
+                Conceito / Jest
+              </th>
+              <th
+                class="px-6 py-4 font-bold bg-indigo-900 border-r border-indigo-800 w-1/4"
+              >
+                <div class="flex items-center gap-2">
+                  <span>📐 Matemático</span>
+                  <span class="text-xs opacity-75 font-normal normal-case"
+                    >(Lógico/Funcional)</span
+                  >
+                </div>
+              </th>
+              <th
+                class="px-6 py-4 font-bold bg-emerald-900 border-r border-emerald-800 w-1/4"
+              >
+                <div class="flex items-center gap-2">
+                  <span>📖 Narrativo</span>
+                  <span class="text-xs opacity-75 font-normal normal-case"
+                    >(BDD/Humano)</span
+                  >
+                </div>
+              </th>
+              <th class="px-6 py-4 font-bold bg-amber-900 w-1/4">
+                <div class="flex items-center gap-2">
+                  <span>🛡️ Imperativo</span>
+                  <span class="text-xs opacity-75 font-normal normal-case"
+                    >(Técnico/Contrato)</span
+                  >
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200">
+            <!-- SEÇÃO: ESTRUTURA BÁSICA -->
+            <tr class="bg-slate-100">
+              <td
+                colspan="4"
+                class="px-6 py-2 font-bold text-xs text-slate-500 uppercase tracking-widest"
+              >
+                Estrutura & Execução
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 font-semibold text-slate-700 mono">
+                describe()
+              </td>
+              <td class="px-6 py-4 text-indigo-700 mono font-bold">axiom()</td>
+              <td class="px-6 py-4 text-emerald-700 mono font-bold">
+                intend() / story()
+              </td>
+              <td class="px-6 py-4 text-amber-700 mono font-bold">
+                ensure() / suite()
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 font-semibold text-slate-700 mono">
+                it() / test()
+              </td>
+              <td class="px-6 py-4 text-indigo-700 mono font-bold">
+                proof() / lemma()
+              </td>
+              <td class="px-6 py-4 text-emerald-700 mono font-bold">
+                detail() / scenario()
+              </td>
+              <td class="px-6 py-4 text-amber-700 mono font-bold">
+                check() / verify()
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 font-semibold text-slate-700 mono">
+                expect(x)
+              </td>
+              <td class="px-6 py-4 text-indigo-700 mono font-bold">
+                implies(x)
+              </td>
+              <td class="px-6 py-4 text-emerald-700 mono font-bold">
+                to(x) / expect(x)
+              </td>
+              <td class="px-6 py-4 text-amber-700 mono font-bold">that(x)</td>
+            </tr>
+
+            <!-- SEÇÃO: MOCKS - CRIAÇÃO -->
+            <tr class="bg-slate-100">
+              <td
+                colspan="4"
+                class="px-6 py-2 font-bold text-xs text-slate-500 uppercase tracking-widest"
+              >
+                Criação de Mocks
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 font-semibold text-slate-700 mono">
+                jest.fn()
+              </td>
+              <td class="px-6 py-4 text-indigo-700 mono font-bold">
+                arbitrary() / lambda()
+              </td>
+              <td class="px-6 py-4 text-emerald-700 mono font-bold">
+                dummy() / standIn()
+              </td>
+              <td class="px-6 py-4 text-amber-700 mono font-bold">
+                stub() / mock()
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 font-semibold text-slate-700 mono">
+                jest.spyOn()
+              </td>
+              <td class="px-6 py-4 text-indigo-700 mono font-bold">
+                monitor()
+              </td>
+              <td class="px-6 py-4 text-emerald-700 mono font-bold">
+                watch() / shadow()
+              </td>
+              <td class="px-6 py-4 text-amber-700 mono font-bold">
+                inspect() / spy()
+              </td>
+            </tr>
+
+            <!-- SEÇÃO: MOCKS - COMPORTAMENTO -->
+            <tr class="bg-slate-100">
+              <td
+                colspan="4"
+                class="px-6 py-2 font-bold text-xs text-slate-500 uppercase tracking-widest"
+              >
+                Configuração de Mocks
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 font-semibold text-slate-700 mono">
+                mockReturnValue(v)
+              </td>
+              <td class="px-6 py-4 text-indigo-700 mono font-bold">
+                yields(v) / mapsTo(v)
+              </td>
+              <td class="px-6 py-4 text-emerald-700 mono font-bold">
+                respondsWith(v)
+              </td>
+              <td class="px-6 py-4 text-amber-700 mono font-bold">
+                forceReturn(v)
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 font-semibold text-slate-700 mono">
+                mockResolvedValue(v)
+              </td>
+              <td class="px-6 py-4 text-indigo-700 mono font-bold">
+                convergesTo(v)
+              </td>
+              <td class="px-6 py-4 text-emerald-700 mono font-bold">
+                eventuallyGives(v)
+              </td>
+              <td class="px-6 py-4 text-amber-700 mono font-bold">
+                resolveWith(v)
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 font-semibold text-slate-700 mono">
+                mockImplementation(fn)
+              </td>
+              <td class="px-6 py-4 text-indigo-700 mono font-bold">
+                derive(fn)
+              </td>
+              <td class="px-6 py-4 text-emerald-700 mono font-bold">
+                actsLike(fn)
+              </td>
+              <td class="px-6 py-4 text-amber-700 mono font-bold">
+                executes(fn)
+              </td>
+            </tr>
+
+            <!-- SEÇÃO: MOCKS - ASSERÇÕES -->
+            <tr class="bg-slate-100">
+              <td
+                colspan="4"
+                class="px-6 py-2 font-bold text-xs text-slate-500 uppercase tracking-widest"
+              >
+                Validação de Chamadas
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 font-semibold text-slate-700 mono">
+                toHaveBeenCalled()
+              </td>
+              <td class="px-6 py-4 text-indigo-700 mono font-bold">
+                .wasEvaluated()
+              </td>
+              <td class="px-6 py-4 text-emerald-700 mono font-bold">
+                .wasCalled()
+              </td>
+              <td class="px-6 py-4 text-amber-700 mono font-bold">
+                .triggered()
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 font-semibold text-slate-700 mono">
+                toHaveBeenCalledWith(x)
+              </td>
+              <td class="px-6 py-4 text-indigo-700 mono font-bold">
+                .appliedTo(x)
+              </td>
+              <td class="px-6 py-4 text-emerald-700 mono font-bold">
+                .received(x)
+              </td>
+              <td class="px-6 py-4 text-amber-700 mono font-bold">
+                .calledWith(x)
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 font-semibold text-slate-700 mono">
+                toHaveBeenCalledTimes(n)
+              </td>
+              <td class="px-6 py-4 text-indigo-700 mono font-bold">
+                .evaluated(n).times
+              </td>
+              <td class="px-6 py-4 text-emerald-700 mono font-bold">
+                .called(n).times
+              </td>
+              <td class="px-6 py-4 text-amber-700 mono font-bold">
+                .triggeredCount(n)
+              </td>
+            </tr>
+
+            <!-- SEÇÃO: LIFECYCLE -->
+            <tr class="bg-slate-100">
+              <td
+                colspan="4"
+                class="px-6 py-2 font-bold text-xs text-slate-500 uppercase tracking-widest"
+              >
+                Ciclo de Vida (Lifecycle)
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 font-semibold text-slate-700 mono">
+                beforeAll()
+              </td>
+              <td class="px-6 py-4 text-indigo-700 mono font-bold">
+                postulate() / setup()
+              </td>
+              <td class="px-6 py-4 text-emerald-700 mono font-bold">
+                background()
+              </td>
+              <td class="px-6 py-4 text-amber-700 mono font-bold">initAll()</td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 font-semibold text-slate-700 mono">
+                afterAll()
+              </td>
+              <td class="px-6 py-4 text-indigo-700 mono font-bold">
+                conclude()
+              </td>
+              <td class="px-6 py-4 text-emerald-700 mono font-bold">
+                cleanup()
+              </td>
+              <td class="px-6 py-4 text-amber-700 mono font-bold">
+                disposeAll()
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 font-semibold text-slate-700 mono">
+                beforeEach()
+              </td>
+              <td class="px-6 py-4 text-indigo-700 mono font-bold">given()</td>
+              <td class="px-6 py-4 text-emerald-700 mono font-bold">
+                before()
+              </td>
+              <td class="px-6 py-4 text-amber-700 mono font-bold">reset()</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-indigo-50 p-6 rounded-lg border border-indigo-100">
+          <h3 class="font-bold text-indigo-900 mb-2">Exemplo Matemático</h3>
+          <pre class="text-xs text-indigo-800 mono overflow-x-auto">
+const f = arbitrary();
+f.yields(10);
+
+proof("f map", () => {
+  f();
+  implies(f).wasEvaluated();
+});</pre
+          >
+        </div>
+
+        <div class="bg-emerald-50 p-6 rounded-lg border border-emerald-100">
+          <h3 class="font-bold text-emerald-900 mb-2">Exemplo Narrativo</h3>
+          <pre class="text-xs text-emerald-800 mono overflow-x-auto">
+const login = standIn();
+login.respondsWith(true);
+
+scenario("Login", () => {
+  login();
+  to(login).wasCalled();
+});</pre
+          >
+        </div>
+
+        <div class="bg-amber-50 p-6 rounded-lg border border-amber-100">
+          <h3 class="font-bold text-amber-900 mb-2">Exemplo Imperativo</h3>
+          <pre class="text-xs text-amber-800 mono overflow-x-auto">
+const api = stub();
+api.forceReturn(200);
+
+check("API status", () => {
+  api();
+  that(api).triggered();
+});</pre
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

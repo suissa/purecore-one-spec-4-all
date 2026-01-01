@@ -1,4 +1,6 @@
-# 🌐 one-spec-4-all
+<p align="center">
+<img src="https://i.imgur.com/769C2dR.png" alt="one-spec-4-all" />
+</p>
 
 > One Runner to Rule Them All.
 
