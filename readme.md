@@ -4,7 +4,7 @@
 
 > One Runner to Rule Them All.
 
-## ✅ Risco Zero: Seu Legado Continua Funcionando
+## ✅ Risco zero: seu legado continua funcionando
 
 Antes de qualquer coisa, veja a **prova** de que não viemos destruir seu trabalho. Este código é 100% válido e roda no mesmo arquivo:
 
@@ -30,7 +30,7 @@ axiom("Nova Criptografia SHA-256", () => {
 
 ---
 
-## 🎯 Cansado de Descrever Quando Quer Provar?
+## 🎯 Cansado de descrever quando quer provar?
 
 A linguagem padronizada de testes (`describe`, `it`, `should`) foi criada para _descrever comportamentos_. Mas e quando você está **provando um teorema matemático**? Ou **verificando conformidade com um contrato de API**?
 
@@ -40,11 +40,11 @@ Este framework segue a **Filosofia Aditiva**: não substituímos o Jest, **adici
 
 ---
 
-## 📊 Por Que Adotar no Seu Time? (Para Líderes)
+## 📊 Por que adotar no seu time? (Para líderes)
 
 Se você é tech lead, arquiteto ou gerente de engenharia, aqui estão os argumentos que importam:
 
-### 💰 ROI de Comunicação
+### 💰 ROI de comunicação
 
 | Problema                               | Solução com one-spec-4-all                             |
 | -------------------------------------- | ------------------------------------------------------ |
@@ -54,7 +54,7 @@ Se você é tech lead, arquiteto ou gerente de engenharia, aqui estão os argume
 
 **Resultado:** Menos reuniões, ciclos de validação mais curtos, menos bugs escapando para produção.
 
-### ⚡ Eficiência do Time
+### ⚡ Eficiência do time
 
 | Situação                          | Benefício                                              |
 | --------------------------------- | ------------------------------------------------------ |
@@ -64,7 +64,7 @@ Se você é tech lead, arquiteto ou gerente de engenharia, aqui estão os argume
 
 **Resultado:** Capacitação em dias, não semanas. Contribuição imediata.
 
-### 🛡️ Saúde do Código (Risco Zero)
+### 🛡️ Saúde do código (risco zero)
 
 | Medo                                  | Realidade                                          |
 | ------------------------------------- | -------------------------------------------------- |
@@ -76,7 +76,7 @@ Se você é tech lead, arquiteto ou gerente de engenharia, aqui estão os argume
 
 ---
 
-## 🚀 Seu Primeiro Teste em 5 Minutos (Quick Start)
+## 🚀 Seu primeiro teste em 5 minutos (quick start)
 
 Veja o framework em ação. Copie, cole e rode:
 
@@ -114,7 +114,7 @@ npx one-spec-4-all
 
 ---
 
-## 🧭 Qual Dialeto é Para Você?
+## 🧭 Qual dialeto é para você?
 
 Você **não precisa aprender os três**. Escolha o que se encaixa no seu mundo e ignore o resto.
 
@@ -141,7 +141,7 @@ Você **não precisa aprender os três**. Escolha o que se encaixa no seu mundo 
 
 ---
 
-## 🛡️ Dialeto Imperativo (Seu Caminho Principal)
+## 🛡️ Dialeto imperativo (seu caminho principal)
 
 O Quick Start usou este dialeto. Vamos aprofundar.
 
@@ -161,7 +161,7 @@ ensure("Conformidade com Gateway PCI-DSS v4", () => {
 
 **Ensure. Verify. That.** Palavras de autoridade.
 
-### 📋 API Essencial
+### 📋 API essencial
 
 | Função                                 | Descrição            | Equivalente Jest      |
 | -------------------------------------- | -------------------- | --------------------- |
@@ -176,7 +176,7 @@ ensure("Conformidade com Gateway PCI-DSS v4", () => {
 
 ---
 
-## 📐 Dialeto Matemático (Para Cientistas de Dados)
+## 📐 Dialeto matemático (para cientistas de dados)
 
 ### 😤 A Dor
 
@@ -209,7 +209,7 @@ axiom("Teoria de Hash SHA-256", () => {
 
 ---
 
-## 📖 Dialeto Narrativo (Para Times com PMs)
+## 📖 Dialeto narrativo (para times com PMs)
 
 ### 😤 A Dor
 
@@ -240,7 +240,7 @@ Agora seu PM **lê e entende**. O teste é a documentação.
 
 ---
 
-## 🎭 Exemplo Poliglota: Carrinho de Compras
+## 🎭 Exemplo poliglota: carrinho de compras
 
 Quando faz sentido usar **todos os dialetos** no mesmo projeto:
 
@@ -271,9 +271,9 @@ ensure("Conformidade com Gateway v2.1", () => {
 
 ---
 
-## 📚 Referência Completa
+## 📚 Referência completa
 
-### Tabela Rosetta (Tradução Jest → Dialetos)
+### Tabela rosetta (tradução Jest → dialetos)
 
 | Conceito / Jest     | 📐 Matemático      | 📖 Narrativo              | 🛡️ Imperativo          |
 | ------------------- | ------------------ | ------------------------- | ---------------------- |
@@ -288,7 +288,7 @@ ensure("Conformidade com Gateway v2.1", () => {
 
 ---
 
-## 🏃 Executando os Testes
+## 🏃 Executando os testes
 
 ```bash
 npx one-spec-4-all   # Escaneia e executa todos os .spec.ts
@@ -298,7 +298,7 @@ npx 1spec            # Alias ainda mais curto
 
 ---
 
-## 📖 Mais Recursos
+## 📖 Mais recursos
 
 - [Histórico de Mudanças (CHANGELOG)](./CHANGELOG.md)
 - [Filosofia Aditiva Explicada](./critica.md)

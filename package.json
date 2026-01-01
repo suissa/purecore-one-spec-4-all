@@ -1,6 +1,6 @@
 {
   "name": "@purecore/one-spec-4-all",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -16,7 +16,8 @@
   "bin": {
     "one-spec-4-all": "./src/cli.ts",
     "os4all": "./src/cli.ts",
-    "1spec": "./src/cli.ts"
+    "1spec": "./src/cli.ts",
+    "testall": "./src/cli.ts"
   },
   "dependencies": {
     "undici-types": "~7.16.0",
