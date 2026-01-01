@@ -1,0 +1,33 @@
+
+ [1m[35m ONE-SPEC-4-ALL [0m [2mv0.2.0[0m
+
+ [96mDEV[0m [2mScanning for [36m.spec.ts[0m files in [90m/mnt/d/www/Freelas/PROJETOS_OPENSOURCE/MEUS/@purecore/canonical/one-tester-4-all[0m[0m
+
+ [2mFound[0m [1m5[0m [2mtest files[0m
+
+[90m ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─[0m
+
+[K [1m[32m✓[0m [90mexamples/[0m[36mimperative.spec.ts[0m [1m[32m1 passed[0m [90m(80ms)[0m
+   [1m[32m✓[0m [2mModule execution[0m [90m80ms[0m
+
+[K [33m⠋[0m [2m[2/5][0m [90mexamples/[0m[36mmath.spec.ts[0m [33m193ms[0m[K [1m[32m✓[0m [90mexamples/[0m[36mmath.spec.ts[0m [1m[32m1 passed[0m [90m(259ms)[0m
+   [1m[32m✓[0m [2mModule execution[0m [90m259ms[0m
+
+[K [1m[32m✓[0m [90mexamples/[0m[36mnarrative.spec.ts[0m [1m[32m1 passed[0m [90m(22ms)[0m
+   [1m[32m✓[0m [2mModule execution[0m [90m22ms[0m
+
+[K [1m[31m✖[0m [90mexamples/[0m[1m[31mpolyglot-shopping-cart.spec.ts[0m [1m[31m1 failed[0m [90m(13ms)[0m
+   [1m[31m✖[0m [1m[31mModule import[0m [90m13ms[0m
+     [1m[31m→[0m [2mreset is not defined[0m
+
+[K [1m[32m✓[0m [90mexamples/[0m[36msanity.spec.ts[0m [1m[32m1 passed[0m [90m(5ms)[0m
+   [1m[32m✓[0m [2mModule execution[0m [90m5ms[0m
+
+[90m ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─[0m
+
+ [1mTest Files[0m  [1m[31m1 failed[0m | [1m[32m4 passed[0m [2m(5)[0m
+ [1m     Tests[0m  [1m[31m1 failed[0m | [1m[32m4 passed[0m [2m(5)[0m
+ [1m  Duration[0m  379ms
+
+ [41m[1m[37m FAIL [0m [1m[31mTests failed. Check the output above.[0m
+

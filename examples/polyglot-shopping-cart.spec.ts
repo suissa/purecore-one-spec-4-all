@@ -28,7 +28,9 @@ import {
   that,
   stub,
   initAll,
-} from "@purecore/one-spec-4-all";
+  reset,
+  clear,
+} from "../src/index";
 
 // =============================================================================
 // 📐 CAMADA MATEMÁTICA: Lógica Pura de Preços
@@ -110,6 +112,9 @@ intend("Jornada de Compra do Usuário", () => {
     const coupon = standIn();
     coupon.respondsWith({ valid: true, discount: 15 });
 
+    // Link the mock logic for the purpose of this example
+    cart.applyCoupon.actsLike(() => coupon("DESCONTO15"));
+
     cart.applyCoupon("DESCONTO15");
     cart.respondsWith({ total: 42.42 }); // 49.9 - 15%
 
@@ -146,12 +151,18 @@ ensure("Conformidade com Gateway de Pagamento v2.1", () => {
 
   initAll(() => {
     // Setup de infraestrutura
-    paymentGateway.forceReturn({
+    paymentGateway.process.forceReturn({
       status: 200,
       transactionId: "tx_abc123",
       timestamp: "2026-01-01T00:00:00Z",
     });
-    transactionLogger.forceReturn(true);
+    transactionLogger.log.forceReturn(true);
+  });
+
+  reset(() => {
+    // Limpa estado entre testes para garantir contagens precisas
+    paymentGateway.clear();
+    transactionLogger.clear();
   });
 
   check("Transação bem-sucedida retorna status 200", () => {
@@ -182,6 +193,7 @@ ensure("Conformidade com Gateway de Pagamento v2.1", () => {
   });
 
   check("Gateway deve ser acionado exatamente uma vez por request", () => {
+    paymentGateway.process({ amount: 100 });
     that(paymentGateway).triggeredCount(1);
   });
 });

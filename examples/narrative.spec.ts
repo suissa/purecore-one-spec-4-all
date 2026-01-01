@@ -1,6 +1,6 @@
 import { NarrativeDialect } from "../src/index";
 
-const { intend, detail, to, standIn, background } = NarrativeDialect;
+const { intend, detail, to, standIn, background, before } = NarrativeDialect;
 
 intend("Jornada de Compra do Usuário", () => {
   // Atores (Mocks)
@@ -8,10 +8,17 @@ intend("Jornada de Compra do Usuário", () => {
   const paymentGateway = standIn();
   const notificationService = standIn();
 
+  before(() => {
+    // Limpa estado para cada cena
+    cart.clear();
+    paymentGateway.clear();
+    notificationService.clear();
+  });
+
   background(() => {
     // Contexto: Carrinho tem itens e gateway está online
-    cart.respondsWith(150.0); // Carrinho retorna total
-    paymentGateway.respondsWith(true); // Pagamento aprovado
+    cart.getTotal.respondsWith(150.0); // Especifica o método
+    paymentGateway.process.respondsWith(true); // Especifica o método
   });
 
   detail("O cliente finaliza a compra com sucesso", () => {
@@ -31,7 +38,7 @@ intend("Jornada de Compra do Usuário", () => {
 
   detail("O sistema deve lidar com falha no pagamento", () => {
     // Mudança de enredo: Gateway recusa
-    paymentGateway.respondsWith(false);
+    paymentGateway.process.respondsWith(false);
 
     const success = paymentGateway.process(100);
 

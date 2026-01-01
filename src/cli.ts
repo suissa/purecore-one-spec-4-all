@@ -142,9 +142,7 @@ function moveCursorUp(lines: number) {
 function printHeader() {
   console.log();
   console.log(
-    ` ${c.bgMagenta}${c.bold}${c.white} ONE-SPEC-4-ALL ${c.reset} ${dim(
-      "v0.1.0"
-    )}`
+    ` ${c.bold}${c.magenta} ONE-SPEC-4-ALL ${c.reset} ${dim("v0.2.0")}`
   );
   console.log();
 }

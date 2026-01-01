@@ -20,6 +20,7 @@ class AtomicCore {
     hooks: { beforeAll: [], afterAll: [], beforeEach: [], afterEach: [] },
   };
   private currentSuite: SuiteNode = this.rootSuite;
+  private suiteStarted = new Set<SuiteNode>();
 
   static get() {
     if (!AtomicCore.instance) AtomicCore.instance = new AtomicCore();
@@ -37,20 +38,20 @@ class AtomicCore {
       parent,
     };
 
-    // Simulação de execução imediata para registro (estilo Jest)
     this.currentSuite = newSuite;
-    console.log(`\n📂 [GROUP] ${name}`);
+    // console.log(`\n📂 [GROUP] ${name}`);
     try {
       fn();
+      // Se houve algum afterAll, rodamos no fim do grupo
+      newSuite.hooks.afterAll.forEach((h) => h());
     } finally {
       this.currentSuite = parent;
     }
   }
 
   defineCase(name: string, fn: VoidFn) {
-    console.log(`  └─ 📝 [CASE] ${name}`);
-    // Em um runner real, guardaríamos para rodar depois. Aqui executamos para demo.
-    this.runTestSafe(name, fn);
+    // console.log(`  └─ 📝 [CASE] ${name}`);
+    this.runTestSafe(this.currentSuite, name, fn);
   }
 
   addHook(type: HookType, fn: VoidFn) {
@@ -59,18 +60,24 @@ class AtomicCore {
 
   // --- Internal Runner Logic ---
 
-  private async runTestSafe(name: string, fn: VoidFn) {
+  private async runTestSafe(suite: SuiteNode, name: string, fn: VoidFn) {
+    // Run beforeAll if first test in this suite
+    if (!this.suiteStarted.has(suite)) {
+      suite.hooks.beforeAll.forEach((h) => h());
+      this.suiteStarted.add(suite);
+    }
+
     try {
-      // Run BeforeEach hooks (simplified)
-      this.currentSuite.hooks.beforeEach.forEach((h) => h());
+      // Run BeforeEach hooks
+      suite.hooks.beforeEach.forEach((h) => h());
 
       await fn();
-      console.log(`     ✅ PASS`);
+      // console.log(`     ✅ PASS`);
 
-      // Run AfterEach hooks (simplified)
-      this.currentSuite.hooks.afterEach.forEach((h) => h());
+      // Run AfterEach hooks
+      suite.hooks.afterEach.forEach((h) => h());
     } catch (e) {
-      console.error(`     ❌ FAIL: ${(e as Error).message}`);
+      console.error(`     ❌ FAIL: ${name} › ${(e as Error).message}`);
     }
   }
 }
@@ -86,14 +93,22 @@ class UniversalMockHandler {
   private impl: ((...args: any[]) => any) | null = null;
   private defaultReturn: any = undefined;
   private isResolved: boolean = false;
+  private parent: UniversalMockHandler | null = null;
 
   constructor(originalImpl?: (...args: any[]) => any) {
     this.impl = originalImpl || null;
   }
 
+  setParent(parent: UniversalMockHandler) {
+    this.parent = parent;
+  }
+
   // O método que é chamado quando alguém invoca o mock
   invoke(...args: any[]) {
     this.calls.push(args);
+    // Notifica o pai que houve uma interação (útil para to(obj).wasCalled())
+    if (this.parent) this.parent.invoke(...args);
+
     if (this.impl) return this.impl(...args);
     if (this.isResolved) return Promise.resolve(this.defaultReturn);
     return this.defaultReturn;
@@ -111,19 +126,28 @@ class UniversalMockHandler {
   setImplementation(fn: any) {
     this.impl = fn;
   }
+  clear() {
+    this.calls = [];
+  }
+  getDefaultReturn() {
+    return this.defaultReturn;
+  }
 }
 
 // A função mágica que é ao mesmo tempo executável e configurável
-function createAtomicMock(implementation?: (...args: any[]) => any) {
+function createAtomicMock(
+  implementation?: (...args: any[]) => any,
+  parentHandler?: UniversalMockHandler
+) {
   const handler = new UniversalMockHandler(implementation);
+  if (parentHandler) handler.setParent(parentHandler);
+  const subMocks = new Map<string, any>();
 
   const mockFn = (...args: any[]) => handler.invoke(...args);
 
-  // Anexamos a instância do handler na função para podermos inspecionar/configurar
-  (mockFn as any)._handler = handler;
-
-  // Mapeamento de TODOS os métodos de configuração de mocks da tabela
-  const config = {
+  // Mapeamento de TODOS os métodos de configuração de mocks
+  const config: Record<string, any> = {
+    _handler: handler,
     // Jest
     mockReturnValue: (v: any) => handler.setReturn(v),
     mockResolvedValue: (v: any) => handler.setResolved(v),
@@ -131,6 +155,7 @@ function createAtomicMock(implementation?: (...args: any[]) => any) {
 
     // Matemático
     yields: (v: any) => handler.setReturn(v),
+    mapsTo: (v: any) => handler.setReturn(v),
     convergesTo: (v: any) => handler.setResolved(v),
     derive: (fn: any) => handler.setImplementation(fn),
 
@@ -143,9 +168,49 @@ function createAtomicMock(implementation?: (...args: any[]) => any) {
     forceReturn: (v: any) => handler.setReturn(v),
     resolveWith: (v: any) => handler.setResolved(v),
     executes: (fn: any) => handler.setImplementation(fn),
+
+    // Common
+    clear: () => {
+      handler.clear();
+      subMocks.forEach((m) => m.clear());
+    },
+    reset: () => {
+      handler.clear();
+      handler.setImplementation(null);
+      handler.setReturn(undefined);
+      subMocks.clear();
+    },
   };
 
-  return Object.assign(mockFn, config);
+  // Retornamos um Proxy para permitir acesso a propriedades arbitrárias (como métodos)
+  return new Proxy(mockFn, {
+    get(target, prop: string) {
+      // 1. Se for um método de configuração ou propriedade interna, retorna do config
+      if (prop in config) return config[prop];
+      if (prop === "then") return undefined; // Evita problemas com Promises
+
+      // 2. Se o mock foi configurado para retornar um objeto, tentamos pegar a propriedade dele
+      const currentReturn = handler.getDefaultReturn();
+      if (
+        currentReturn &&
+        typeof currentReturn === "object" &&
+        prop in currentReturn
+      ) {
+        return currentReturn[prop];
+      }
+
+      // 3. Se for uma propriedade arbitrária e não temos valor, retornamos um sub-mock (lazy creation)
+      if (!subMocks.has(prop)) {
+        subMocks.set(prop, createAtomicMock(undefined, handler));
+      }
+      return subMocks.get(prop);
+    },
+    // Permite Object.assign e outras operações
+    set(target, prop: string, value: any) {
+      config[prop] = value;
+      return true;
+    },
+  });
 }
 
 function createAtomicSpy(obj: any, method: string) {
@@ -190,7 +255,12 @@ class UniversalAssertion<T> {
   // Matemático
   is(expected: T) {
     this.toBe(expected);
-  } // Alias
+  }
+
+  // Narrativo
+  be(expected: T) {
+    this.toBe(expected);
+  }
 
   // Imperativo
   isOk() {
@@ -213,6 +283,9 @@ class UniversalAssertion<T> {
         prop in (this.actual as any),
       `Intend object to have '${prop}'`
     );
+  }
+  uploaded(...args: any[]) {
+    this.received(...args);
   }
 
   // --- Mock Assertions ---
