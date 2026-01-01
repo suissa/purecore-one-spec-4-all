@@ -3,10 +3,6 @@
 </p>
 
 > One Runner to Rule Them All.
->
-> [Veja o Histórico de Mudanças (CHANGELOG)](./CHANGELOG.md) | [Leia a Filosofia Aditiva](./critica.md)
-
----
 
 ## 🎯 Cansado de Descrever Quando Quer Provar?
 
@@ -15,8 +11,6 @@ A **one-spec-4-all** nasce de uma frustração real: a linguagem padronizada de 
 A linguagem importa. Ela molda o pensamento.
 
 Este framework segue a **Filosofia Aditiva**: não substituímos o Jest, **adicionamos** o vocabulário que faltava. Seu código legado continua funcionando. Seu conhecimento de `describe`, `it`, `expect` continua válido. Você só ganha novas ferramentas.
-
----
 
 ## 🚀 Seu Primeiro Teste em 5 Minutos (Quick Start)
 
@@ -54,8 +48,6 @@ npx one-spec-4-all
 
 **Pronto!** Você acabou de rodar seu primeiro teste com o dialeto Imperativo. Agora, descubra qual dialeto é o ideal para _seu_ projeto.
 
----
-
 ## 🧭 Qual Dialeto é Para Você?
 
 Você **não precisa aprender os três**. Escolha o que se encaixa no seu mundo e ignore o resto. O framework é poliglota; você não precisa ser.
@@ -80,8 +72,6 @@ Você **não precisa aprender os três**. Escolha o que se encaixa no seu mundo 
    │ axiom, proof, implies│      │ intend, scenario, to │      │ ensure, check, that  │
    └──────────────────────┘      └──────────────────────┘      └──────────────────────┘
 ```
-
----
 
 ## 📐 Dialeto Matemático (MathDialect)
 
@@ -174,8 +164,6 @@ axiom("Teoria de Juros Compostos", () => {
 });
 ```
 
----
-
 ## 📖 Dialeto Narrativo (NarrativeDialect)
 
 ### 😤 A Dor Que Resolvemos
@@ -265,8 +253,6 @@ intend("Fluxo de Autenticação do Usuário", () => {
 });
 ```
 
----
-
 ## 🛡️ Dialeto Imperativo (ImperativeDialect)
 
 ### 😤 A Dor Que Resolvemos
@@ -352,8 +338,6 @@ ensure("Conformidade do Gateway de Pagamento", () => {
 });
 ```
 
----
-
 ## 🔄 Como Adotar Gradualmente (Migração)
 
 Você tem 5.000 testes em Jest? **Não reescreva nada.** O one-spec-4-all entende nativamente a sintaxe do Jest.
@@ -377,8 +361,6 @@ axiom("Nova Criptografia SHA-256", () => {
 ```
 
 Um único comando `npm test` executa **ambos**. Mesmo relatório. Mesma cobertura de código.
-
----
 
 ## 📚 Tópicos Avançados
 
@@ -422,8 +404,6 @@ intend("User Interface", () => {
   // ... cenários de usuário
 });
 ```
-
----
 
 ## 🏃 Executando os Testes
 
